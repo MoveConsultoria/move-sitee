@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raio-X do Delivery · MOVE Consultoria</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+:root{
+  --preto:#1A1A1A;--ambar:#EF9F27;--ambar2:#FAC775;
+  --creme:#F5F4F0;--grafite:#444441;--borda:#E2E0DA;
+  --branco:#FFFFFF;--ok:#2D7B4F;--erro:#B83232;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--creme);color:var(--preto);font-size:16px;line-height:1.65}
+
+/* ── NAV ── */
+.site-nav{background:var(--preto);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(255,255,255,.06)}
+.site-nav-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:18px;color:var(--branco);letter-spacing:-.5px;padding:14px 0;flex-shrink:0}
+.site-nav-logo em{color:var(--ambar);font-style:normal}
+.site-nav-tabs{display:flex;gap:0;overflow-x:auto}
+.site-tab{padding:16px 18px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:rgba(255,255,255,.4);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap}
+.site-tab:hover{color:rgba(255,255,255,.75)}
+.site-tab.active{color:var(--ambar);border-bottom-color:var(--ambar)}
+
+/* ── PÁGINAS ── */
+.site-page{display:none}
+.site-page.active{display:block}
+
+/* ── UTILITÁRIOS ── */
+.container{max-width:880px;margin:0 auto;padding:0 24px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ambar);margin-bottom:12px}
+.section-h2{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);line-height:1.15;margin-bottom:48px}
+
+/* ══════════════════════
+   PÁGINA 1 — RAIO-X
+══════════════════════ */
+#hero{background:var(--preto);padding:0}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;max-width:1100px;margin:0 auto}
+.hero-left{padding:72px 56px 72px 40px;display:flex;flex-direction:column;justify-content:center}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ambar);margin-bottom:16px}
+.hero-h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(32px,4vw,50px);color:var(--branco);line-height:1.08;margin-bottom:20px}
+.hero-h1 em{color:var(--ambar);font-style:normal;display:block}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:36px;max-width:380px}
+.hero-preco-wrap{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.hero-preco-de{font-size:14px;color:rgba(255,255,255,.3);text-decoration:line-through}
+.hero-preco{font-family:'Montserrat',sans-serif;font-weight:900;font-size:42px;color:var(--ambar);line-height:1}
+.hero-prazo{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:28px}
+.btn-cta{display:inline-block;background:var(--ambar);color:var(--preto);font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;padding:18px 36px;border-radius:10px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s;cursor:pointer;border:none;width:100%;text-align:center}
+.btn-cta:hover{opacity:.88}
+.hero-seg{font-size:12px;color:rgba(255,255,255,.3);margin-top:12px;text-align:center}
+.hero-right{background:linear-gradient(160deg,#232320 0%,#1a1a1a 100%);display:flex;flex-direction:column;justify-content:center;padding:72px 40px 72px 48px;border-left:1px solid rgba(255,255,255,.06)}
+.hero-checklist{list-style:none;display:flex;flex-direction:column;gap:20px}
+.hero-checklist li{display:flex;align-items:flex-start;gap:14px;font-size:15px;color:rgba(255,255,255,.75);line-height:1.5}
+.check-icon{width:22px;height:22px;border-radius:50%;background:var(--ambar);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.check-icon svg{width:11px;height:11px}
+.hero-checklist strong{color:var(--branco);display:block;font-weight:600;margin-bottom:2px}
+
+/* ── COMO FUNCIONA ── */
+#como{background:var(--branco);padding:88px 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.step{position:relative}
+.step-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:52px;color:var(--ambar);line-height:1;margin-bottom:12px}
+.step h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px}
+.step p{font-size:14px;color:var(--grafite);line-height:1.6}
+.step-connector{position:absolute;top:28px;right:-20px;font-size:22px;color:var(--borda)}
+
+/* ── O QUE ANALISAMOS ── */
+#analise{background:var(--creme);padding:88px 0}
+.analise-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.analise-card{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:28px 28px 24px}
+.analise-icon{width:40px;height:40px;background:var(--preto);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.analise-icon svg{width:20px;height:20px}
+.analise-card h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px}
+.analise-card p{font-size:14px;color:var(--grafite);line-height:1.6;margin-bottom:12px}
+.analise-entrega{font-size:12px;font-weight:600;color:var(--ok);background:#EBF6EF;padding:4px 10px;border-radius:5px;display:inline-block}
+
+/* ── SEÇÃO CALCULADORA CMV ── */
+#calc-teaser{background:var(--preto);padding:88px 0}
+.calc-teaser-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.calc-teaser-left .section-label{color:var(--ambar2)}
+.calc-teaser-h2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(24px,3vw,36px);color:var(--branco);line-height:1.1;margin-bottom:16px}
+.calc-teaser-sub{font-size:15px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:28px}
+.calc-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.calc-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:rgba(255,255,255,.7)}
+.calc-features li::before{content:'✓';color:var(--ambar);font-weight:700;flex-shrink:0;margin-top:1px}
+.btn-calc-teaser{display:inline-flex;align-items:center;gap:8px;background:none;border:1.5px solid var(--ambar);color:var(--ambar);font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 24px;border-radius:8px;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+.btn-calc-teaser:hover{background:var(--ambar);color:var(--preto)}
+.calc-mockup{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px}
+.calc-mockup-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:4px}
+.calc-row{display:flex;flex-direction:column;gap:6px}
+.calc-row label{font-size:12px;color:rgba(255,255,255,.4)}
+.calc-row .calc-input-fake{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:10px 14px;font-size:14px;color:rgba(255,255,255,.7);display:flex;justify-content:space-between}
+.calc-resultado{background:rgba(239,159,39,.1);border:1px solid rgba(239,159,39,.25);border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.calc-resultado-label{font-size:13px;color:rgba(255,255,255,.5)}
+.calc-resultado-val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:26px;color:var(--ambar)}
+.calc-preco-tag{font-size:12px;color:rgba(255,255,255,.3);text-align:center;margin-top:4px}
+.calc-preco-tag strong{color:var(--ambar2)}
+
+/* ── PROVA ── */
+#prova{background:var(--branco);padding:88px 0}
+.prova-inner{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.prova-nums{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.num-card{background:var(--creme);border:1px solid var(--borda);border-radius:12px;padding:22px 20px}
+.num-val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:36px;color:var(--ambar);line-height:1;margin-bottom:4px}
+.num-label{font-size:13px;color:var(--grafite);line-height:1.4}
+.prova-quote{background:var(--creme);border:1px solid var(--borda);border-radius:14px;padding:28px}
+.quote-text{font-size:16px;color:var(--preto);line-height:1.7;margin-bottom:16px;font-style:italic}
+.quote-autor{font-size:13px;color:#aaa}
+.quote-autor strong{color:var(--grafite);display:block}
+
+/* ── FORMULÁRIO ── */
+#formulario{background:var(--creme);padding:88px 0}
+.form-layout{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:start}
+.form-steps-nav{display:flex;gap:0;margin-bottom:32px;border:1px solid var(--borda);border-radius:10px;overflow:hidden}
+.form-step-btn{flex:1;padding:12px;font-size:13px;font-weight:600;background:none;border:none;cursor:default;color:#bbb;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+.form-step-btn.active{background:var(--preto);color:var(--ambar)}
+.form-step-btn.done{background:#EBF6EF;color:var(--ok)}
+.step-dot{width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.form-panel{display:none}
+.form-panel.active{display:block}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--preto);margin-bottom:6px}
+.field label span{color:var(--erro);margin-left:2px}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--borda);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--preto);background:var(--branco);transition:border-color .2s,box-shadow .2s;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ambar);box-shadow:0 0 0 3px rgba(239,159,39,.12)}
+.field textarea{resize:vertical;min-height:90px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field-hint{font-size:12px;color:#aaa;margin-top:4px}
+.radio-group{display:flex;flex-direction:column;gap:8px}
+.radio-card{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--borda);border-radius:8px;cursor:pointer;transition:all .15s;background:var(--branco)}
+.radio-card:has(input:checked){border-color:var(--ambar);background:#FFF8EC;box-shadow:0 0 0 2px rgba(239,159,39,.2)}
+.radio-card input{accent-color:var(--ambar);width:16px;height:16px;flex-shrink:0}
+.radio-label{font-size:14px;font-weight:500}
+.radio-sub{font-size:12px;color:#aaa;display:block;margin-top:1px}
+.check-field{display:flex;align-items:flex-start;gap:10px;padding:10px 0}
+.check-field input{accent-color:var(--ambar);width:16px;height:16px;margin-top:2px;flex-shrink:0}
+.check-field label{font-size:13.5px;color:var(--grafite);line-height:1.5;cursor:pointer}
+.form-nav{display:flex;gap:12px;margin-top:28px}
+.btn-prev{padding:13px 24px;border:1px solid var(--borda);border-radius:8px;background:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;color:var(--grafite)}
+.btn-prev:hover{background:var(--creme)}
+.btn-next{flex:1;padding:14px 24px;background:var(--preto);color:var(--branco);border:none;border-radius:8px;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;letter-spacing:.02em}
+.btn-next:hover{opacity:.85}
+.btn-next:disabled{opacity:.4;cursor:not-allowed}
+.progress-bar{height:4px;background:var(--borda);border-radius:99px;margin-bottom:28px;overflow:hidden}
+.progress-fill{height:100%;background:var(--ambar);border-radius:99px;transition:width .4s ease}
+.pay-sidebar{position:sticky;top:72px}.pay-card{background:var(--preto);border-radius:16px;overflow:hidden}
+.pay-card-top{padding:28px}
+.pay-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ambar2);margin-bottom:8px}
+.pay-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;color:var(--branco);line-height:1.2;margin-bottom:20px}
+.pay-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.pay-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:rgba(255,255,255,.65);line-height:1.4}
+.pay-list li::before{content:'✓';color:var(--ambar);font-weight:700;flex-shrink:0;margin-top:1px}
+.pay-divider{height:1px;background:rgba(255,255,255,.07);margin:0 28px}
+.pay-card-bottom{padding:24px 28px}
+.pay-preco-label{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.pay-preco{font-family:'Montserrat',sans-serif;font-weight:900;font-size:38px;color:var(--ambar);line-height:1;margin-bottom:4px}
+.pay-preco-nota{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:20px}
+.btn-pay{display:block;width:100%;padding:16px;background:var(--ambar);color:var(--preto);font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;text-align:center;border-radius:8px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s;cursor:pointer;border:none}
+.btn-pay:hover{opacity:.88}
+.pay-seguro{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11.5px;color:rgba(255,255,255,.25);margin-top:12px}
+.field-error{border-color:var(--erro)!important;box-shadow:0 0 0 3px rgba(184,50,50,.1)!important}
+.error-msg{font-size:12px;color:var(--erro);margin-top:4px;display:none}
+.error-msg.show{display:block}
+.success-panel{text-align:center;padding:48px 24px}
+.success-icon{width:72px;height:72px;border-radius:50%;background:#EBF6EF;display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.success-icon svg{width:36px;height:36px}
+.success-h{font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;margin-bottom:12px}
+.success-p{font-size:15px;color:var(--grafite);line-height:1.65;margin-bottom:24px}
+.success-box{background:var(--creme);border:1px solid var(--borda);border-radius:10px;padding:20px;font-size:13.5px;color:var(--grafite);line-height:1.7;text-align:left}
+.success-box strong{color:var(--preto);font-weight:600}
+
+/* ── FAQ ── */
+#faq{background:var(--branco);padding:88px 0}
+.faq-list{display:flex;flex-direction:column;gap:2px;margin-top:40px}
+.faq-item{background:var(--creme);border:1px solid var(--borda);border-radius:10px;overflow:hidden}
+.faq-q{width:100%;padding:18px 22px;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--preto);text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q:hover{background:rgba(0,0,0,.03)}
+.faq-arrow{font-size:20px;color:var(--ambar);transition:transform .25s;flex-shrink:0}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 22px}
+.faq-a p{font-size:14.5px;color:var(--grafite);line-height:1.7;padding-bottom:18px}
+.faq-item.open .faq-arrow{transform:rotate(45deg)}
+.faq-item.open .faq-a{max-height:300px;padding:4px 22px}
+
+/* ══════════════════════
+   PÁGINA 2 — PLANOS
+══════════════════════ */
+#pg-planos{background:var(--creme);min-height:80vh}
+.planos-hero{background:var(--preto);padding:72px 0 0}
+
+/* TIMER */
+.timer-banner{
+  background:var(--preto);
+  border-bottom:2px solid var(--ambar);
+  padding:0 32px;
+  text-align:center;
+  position:sticky;
+  top:53px; /* altura da site-nav */
+  z-index:190;
+  display:none; /* controlado por JS */
+}
+.timer-banner-inner{display:flex;align-items:center;justify-content:center;gap:20px;height:56px;flex-wrap:nowrap}
+.timer-label{font-size:13px;font-weight:500;color:rgba(255,255,255,.55);white-space:nowrap}
+.timer-blocks{display:flex;align-items:center;gap:8px}
+.timer-block{background:var(--ambar);border-radius:7px;padding:8px 14px;min-width:56px;text-align:center}
+.timer-block-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:26px;color:var(--preto);line-height:1;display:block}
+.timer-block-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(26,26,26,.55);display:block;margin-top:1px}
+.timer-sep{font-family:'Montserrat',sans-serif;font-weight:900;font-size:26px;color:var(--ambar);line-height:1}
+.timer-expired{font-size:13px;color:rgba(255,255,255,.4);font-style:italic}
+
+.planos-hero-content{padding:48px 0 64px}
+.planos-hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ambar);margin-bottom:14px}
+.planos-hero-h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(28px,4vw,44px);color:var(--branco);line-height:1.1;margin-bottom:16px}
+.planos-hero-sub{font-size:16px;color:rgba(255,255,255,.5);max-width:560px;line-height:1.65}
+.planos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:56px 0 88px}
+.plano-card{background:var(--branco);border:1px solid var(--borda);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.plano-card.destaque{border:2px solid var(--ambar)}
+.plano-card-top{background:var(--preto);padding:28px 28px 24px}
+.plano-card.destaque .plano-card-top{background:#1f1c14}
+.plano-badge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar2);margin-bottom:10px}
+.plano-nome{font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;color:var(--branco);line-height:1.2;margin-bottom:8px}
+.plano-desc{font-size:13px;color:rgba(255,255,255,.45);line-height:1.55}
+.plano-card-mid{padding:24px 28px;border-bottom:1px solid var(--borda)}
+.plano-preco-label{font-size:11px;color:#aaa;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.plano-preco-de{font-size:14px;color:#bbb;text-decoration:line-through;margin-bottom:2px}
+.plano-preco{font-family:'Montserrat',sans-serif;font-weight:900;font-size:34px;color:var(--preto);line-height:1;margin-bottom:2px}
+.plano-preco-nota{font-size:12px;color:#aaa}
+.plano-oferta-tag{display:inline-block;background:#EBF6EF;color:#1E5C38;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;margin-bottom:8px}
+.plano-card-body{padding:24px 28px;flex:1;display:flex;flex-direction:column}
+.plano-includes{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;flex:1}
+.plano-includes li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--grafite);line-height:1.45}
+.plano-includes li::before{content:'✓';color:var(--ok);font-weight:700;flex-shrink:0;margin-top:1px}
+.plano-calc-bonus{background:#FFF8EC;border:1px solid rgba(239,159,39,.3);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--grafite);margin-bottom:16px;line-height:1.5}
+.plano-calc-bonus strong{color:var(--ambar);font-weight:700}
+.btn-plano{display:block;width:100%;padding:15px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;text-align:center;border-radius:8px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s;cursor:pointer;border:none}
+.btn-plano-dark{background:var(--preto);color:var(--branco)}
+.btn-plano-ambar{background:var(--ambar);color:var(--preto)}
+.btn-plano-dark:hover,.btn-plano-ambar:hover{opacity:.85}
+.plano-destaque-badge{background:var(--ambar);color:var(--preto);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:8px;display:block}
+
+/* ══════════════════════
+   PÁGINA 3 — CALCULADORA
+══════════════════════ */
+#pg-calculadora{background:var(--creme);min-height:80vh}
+.calc-hero{background:var(--preto);padding:72px 0 64px}
+.calc-hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ambar);margin-bottom:14px}
+.calc-hero-h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(28px,4vw,44px);color:var(--branco);line-height:1.1;margin-bottom:16px}
+.calc-hero-sub{font-size:16px;color:rgba(255,255,255,.5);max-width:600px;line-height:1.65}
+.calc-page-grid{display:grid;grid-template-columns:1fr 360px;gap:40px;padding:56px 0 88px;align-items:start}
+.calc-features-full{display:flex;flex-direction:column;gap:20px}
+.calc-feature-item{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:24px 26px;display:flex;gap:20px;align-items:flex-start}
+.calc-feature-icon{width:44px;height:44px;background:var(--preto);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.calc-feature-icon svg{width:22px;height:22px}
+.calc-feature-item h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;margin-bottom:6px}
+.calc-feature-item p{font-size:14px;color:var(--grafite);line-height:1.6}
+.calc-pricing-card{position:sticky;top:80px;background:var(--branco);border:1px solid var(--borda);border-radius:16px;overflow:hidden}
+.calc-pricing-top{background:var(--preto);padding:28px}
+.calc-pricing-badge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar2);margin-bottom:10px}
+.calc-pricing-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;color:var(--branco);margin-bottom:8px}
+.calc-pricing-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.5}
+.calc-pricing-body{padding:28px}
+.calc-preco-wrap{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.calc-preco-val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:36px;color:var(--preto);line-height:1}
+.calc-preco-per{font-size:14px;color:#aaa}
+.calc-preco-nota{font-size:12px;color:#aaa;margin-bottom:20px}
+.calc-divider{height:1px;background:var(--borda);margin:20px 0}
+.calc-bonus-box{background:#FFF8EC;border:1px solid rgba(239,159,39,.3);border-radius:10px;padding:16px;margin-bottom:20px}
+.calc-bonus-titulo{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ambar);margin-bottom:8px}
+.calc-bonus-desc{font-size:13px;color:var(--grafite);line-height:1.55}
+.calc-bonus-preco{font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;color:var(--preto);margin-top:8px}
+.calc-bonus-preco span{font-size:13px;font-weight:400;color:#aaa}
+.btn-calc-assinar{display:block;width:100%;padding:16px;background:var(--ambar);color:var(--preto);font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;text-align:center;border-radius:8px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s;cursor:pointer;border:none;margin-bottom:10px}
+.btn-calc-assinar:hover{opacity:.88}
+.btn-calc-plano{display:block;width:100%;padding:14px;background:none;color:var(--preto);font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;text-align:center;border-radius:8px;text-decoration:none;letter-spacing:.02em;transition:all .2s;cursor:pointer;border:1.5px solid var(--borda)}
+.btn-calc-plano:hover{border-color:var(--ambar);color:var(--ambar)}
+.calc-seg{font-size:12px;color:#aaa;text-align:center;margin-top:10px}
+
+/* ── FOOTER ── */
+footer{background:var(--preto);padding:32px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.25)}
+footer strong{color:rgba(255,255,255,.5)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .site-nav{padding:0 12px}
+  .site-tab{padding:14px 12px;font-size:12px}
+  .hero-inner,.calc-teaser-inner,.prova-inner,.form-layout,.calc-page-grid{grid-template-columns:1fr}
+  .hero-left{padding:48px 24px 32px}
+  .hero-right{padding:32px 24px 48px;border-left:none;border-top:1px solid rgba(255,255,255,.06)}
+  .steps,.analise-grid,.planos-grid{grid-template-columns:1fr}
+  .step-connector{display:none}
+  .pay-sidebar,.calc-pricing-card{position:static}
+  .field-row{grid-template-columns:1fr}
+  .timer-banner-inner{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="site-nav">
+  <div class="site-nav-logo">M<em>O</em>VE</div>
+  <div class="site-nav-tabs">
+    <button class="site-tab active" onclick="mudarAba('raiox',this)">Raio-X · R$ 37</button>
+    <button class="site-tab" onclick="mudarAba('planos',this)">Planos de Consultoria</button>
+    <button class="site-tab" onclick="mudarAba('calculadora',this)">MOVE Calculadora CMV</button>
+  </div>
+</nav>
+
+<!-- TIMER GLOBAL FIXO — aparece em qualquer aba após o pagamento -->
+<div class="timer-banner" id="timer-banner">
+  <div class="timer-banner-inner">
+    <span class="timer-label">Oferta especial nos planos de consultoria disponível por</span>
+    <div class="timer-blocks">
+      <div class="timer-block"><span class="timer-block-num" id="t-h">23</span><span class="timer-block-lbl">horas</span></div>
+      <span class="timer-sep">:</span>
+      <div class="timer-block"><span class="timer-block-num" id="t-m">59</span><span class="timer-block-lbl">min</span></div>
+      <span class="timer-sep">:</span>
+      <div class="timer-block"><span class="timer-block-num" id="t-s">59</span><span class="timer-block-lbl">seg</span></div>
+    </div>
+  </div>
+</div>
+     PÁGINA 1 — RAIO-X
+════════════════════════════ -->
+<div id="pg-raiox" class="site-page active">
+
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Raio-X do Delivery</div>
+      <h1 class="hero-h1">Seu iFood tem<br>problema.<br><em>A gente mostra qual.</em></h1>
+      <p class="hero-sub">Analisamos sua loja a fundo — nota, precificação, avaliações e cardápio — e entregamos um relatório com os 3 pontos que mais estão travando seu crescimento. Em 48h, por escrito, sem reunião.</p>
+      <div class="hero-preco-wrap">
+        <span class="hero-preco-de">R$ 97</span>
+        <span class="hero-preco">R$ 37</span>
+      </div>
+      <p class="hero-prazo">Entrega em até 48h úteis após o pagamento</p>
+      <a href="SEU_LINK_PAGAMENTO_RAIOX" target="_blank" class="btn-cta" onclick="iniciarTimer()">Quero o meu Raio-X agora</a>
+      <p class="hero-seg">Pagamento seguro</p>
+    </div>
+    <div class="hero-right">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:20px">O que você vai receber</div>
+      <ul class="hero-checklist">
+        <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Análise completa da nota e reputação</strong>Identificamos o padrão das suas avaliações e o que está puxando a nota pra baixo.</div></li>
+        <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Precificação com fórmula CMV aplicada</strong>Mostramos produto a produto se seu preço está absorvendo a comissão ou se você está vendendo no prejuízo.</div></li>
+        <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Diagnóstico de visibilidade e cardápio</strong>Fotos, categorias, combos, descrições e posicionamento frente à concorrência local.</div></li>
+        <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Top 3 oportunidades de crescimento</strong>As ações de maior impacto para a sua loja específica, priorizadas e explicadas.</div></li>
+        <li><div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><strong>Relatório em PDF · entregue em 48h</strong>Documento profissional com dados reais da sua loja. Nada genérico.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="como">
+  <div class="container">
+    <div class="section-label">Como funciona</div>
+    <h2 class="section-h2">Três passos. 48 horas.<br>Resultado na mão.</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><h3>Pague e preencha</h3><p>Clique no botão, conclua o pagamento e responda o formulário aqui mesmo. Leva menos de 5 minutos.</p><div class="step-connector">›</div></div>
+      <div class="step"><div class="step-num">02</div><h3>A MOVE analisa sua loja</h3><p>Acessamos seu perfil no iFood e fazemos a análise completa: nota, precificação, cardápio, avaliações e concorrência local.</p><div class="step-connector">›</div></div>
+      <div class="step"><div class="step-num">03</div><h3>Você recebe o Raio-X</h3><p>Em até 48h úteis, enviamos o relatório completo no WhatsApp ou e-mail que você indicar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="analise">
+  <div class="container">
+    <div class="section-label">O que entra no relatório</div>
+    <h2 class="section-h2">Cada ponto analisado.<br>Cada dado explicado.</h2>
+    <div class="analise-grid">
+      <div class="analise-card"><div class="analise-icon"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2l2.4 4.8 5.3.8-3.85 3.75.91 5.3L10 14.1l-4.76 2.55.91-5.3L2.3 7.6l5.3-.8L10 2z" fill="#EF9F27"/></svg></div><h3>Nota e reputação</h3><p>Distribuição de avaliações, padrão das reclamações, taxa de resposta e o que impede de chegar em 4,7★.</p><span class="analise-entrega">Entregável: diagnóstico de reputação</span></div>
+      <div class="analise-card"><div class="analise-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="10" width="3" height="7" rx="1" fill="#EF9F27"/><rect x="8.5" y="6" width="3" height="11" rx="1" fill="rgba(239,159,39,.5)"/><rect x="14" y="3" width="3" height="14" rx="1" fill="rgba(239,159,39,.3)"/></svg></div><h3>Precificação com CMV</h3><p>Aplicamos a fórmula de custo real nos produtos principais e mostramos quais estão com margem negativa.</p><span class="analise-entrega">Entregável: tabela de precificação</span></div>
+      <div class="analise-card"><div class="analise-icon"><svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="6" height="6" rx="1.5" fill="#EF9F27"/><rect x="11" y="3" width="6" height="6" rx="1.5" fill="rgba(239,159,39,.4)"/><rect x="3" y="11" width="6" height="6" rx="1.5" fill="rgba(239,159,39,.4)"/><rect x="11" y="11" width="6" height="6" rx="1.5" fill="rgba(239,159,39,.2)"/></svg></div><h3>Cardápio e visibilidade</h3><p>Qualidade das fotos, estrutura de categorias, combos e posicionamento frente à concorrência local.</p><span class="analise-entrega">Entregável: análise de cardápio</span></div>
+      <div class="analise-card"><div class="analise-icon"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#EF9F27" stroke-width="1.8"/><path d="M10 6v4l3 2" stroke="#EF9F27" stroke-width="1.8" stroke-linecap="round"/></svg></div><h3>Top 3 oportunidades</h3><p>As três ações de maior impacto, priorizadas por facilidade e potencial de resultado imediato.</p><span class="analise-entrega">Entregável: plano de ação priorizado</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO CALCULADORA CMV -->
+<section id="calc-teaser">
+  <div class="container">
+    <div class="calc-teaser-inner">
+      <div class="calc-teaser-left">
+        <div class="section-label">MOVE Calculadora CMV</div>
+        <h2 class="calc-teaser-h2">Quanto você precisa<br>cobrar para lucrar<br>de verdade?</h2>
+        <p class="calc-teaser-sub">Informe o custo do seu produto e a margem de lucro que deseja. A calculadora entrega o preço de venda ideal — feita para restaurantes, lanchonetes, pizzarias e qualquer negócio de alimentação no iFood.</p>
+        <ul class="calc-features">
+          <li>Funciona para qualquer item do seu cardápio</li>
+          <li>Três campos, resultado instantâneo</li>
+          <li>Sem planilha, sem fórmula manual</li>
+          <li>Precificação profissional para seu delivery</li>
+        </ul>
+        <button class="btn-calc-teaser" onclick="mudarAba('calculadora', document.querySelectorAll('.site-tab')[2])">Conhecer a calculadora →</button>
+      </div>
+      <div class="calc-mockup">
+        <div class="calc-mockup-title">MOVE Calculadora CMV</div>
+        <div class="calc-row"><label>Custo do produto</label><div class="calc-input-fake"><span>R$ 12,00</span><span style="color:rgba(255,255,255,.3);font-size:12px">quanto você paga</span></div></div>
+        <div class="calc-row"><label>Margem de lucro desejada</label><div class="calc-input-fake"><span>40%</span><span style="color:rgba(255,255,255,.3);font-size:12px">sobre o preço de venda</span></div></div>
+        <div class="calc-resultado">
+          <div><div class="calc-resultado-label">Preço de venda</div><div style="font-size:12px;color:rgba(255,255,255,.3);margin-top:2px">com 40% de margem</div></div>
+          <div class="calc-resultado-val">R$ 20,00</div>
+        </div>
+        <div class="calc-preco-tag">Assinatura a partir de <strong>R$ 14,99/mês</strong> · incluída nos planos de consultoria por <strong>R$ 0,99/mês</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prova">
+  <div class="container">
+    <div class="prova-inner">
+      <div>
+        <div class="section-label">Resultados reais</div>
+        <h2 class="section-h2" style="margin-bottom:28px">O que muda quando<br>o diagnóstico é certo.</h2>
+        <div class="prova-nums">
+          <div class="num-card"><div class="num-val">+42%</div><div class="num-label">de aumento médio no ticket após correção de precificação</div></div>
+          <div class="num-card"><div class="num-val">4,7★</div><div class="num-label">nota média atingida em 60 dias com protocolo de avaliações</div></div>
+          <div class="num-card"><div class="num-val">48h</div><div class="num-label">tempo máximo de entrega do seu Raio-X</div></div>
+          <div class="num-card"><div class="num-val">R$ 37</div><div class="num-label">para ter clareza sobre o que está travando seu delivery</div></div>
+        </div>
+      </div>
+      <div class="prova-quote">
+        <div class="quote-text">"Estava vendendo todo dia e não entendia por que no fim do mês não sobrava nada. O Raio-X mostrou que 3 dos meus produtos mais vendidos estavam com margem negativa."</div>
+        <div class="quote-autor"><strong>Restaurante no Água Verde</strong>Curitiba · cliente MOVE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="formulario">
+  <div class="container">
+    <div class="section-label">Garanta o seu</div>
+    <h2 class="section-h2" style="margin-bottom:48px">Pague, preencha e receba<br>o diagnóstico em 48h.</h2>
+    <div id="form-pago-aviso" style="background:#EBF6EF;border:1px solid #B7DFC8;border-radius:10px;padding:16px 20px;margin-bottom:24px;font-size:14px;color:#1E5C38;display:none"><strong>Pagamento confirmado!</strong> Agora preencha o formulário para que possamos preparar seu Raio-X personalizado.</div>
+    <div class="form-layout">
+      <div>
+        <div class="form-steps-nav">
+          <button class="form-step-btn active" id="stepbtn-1"><span class="step-dot">1</span> Sua loja</button>
+          <button class="form-step-btn" id="stepbtn-2"><span class="step-dot">2</span> Cardápio</button>
+          <button class="form-step-btn" id="stepbtn-3"><span class="step-dot">3</span> Situação</button>
+          <button class="form-step-btn" id="stepbtn-4"><span class="step-dot">4</span> Entrega</button>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:25%"></div></div>
+
+        <div class="form-panel active" id="panel-1">
+          <div class="field"><label>Nome do restaurante no iFood <span>*</span></label><input type="text" id="f-nome-loja" placeholder="Ex: Pizzaria Família Rossi"><div class="error-msg" id="err-nome-loja">Campo obrigatório</div></div>
+          <div class="field"><label>Link da loja no iFood <span>*</span></label><input type="url" id="f-link-loja" placeholder="https://www.ifood.com.br/delivery/..."><div class="field-hint">Acesse sua loja no iFood e copie o link do navegador</div><div class="error-msg" id="err-link-loja">Cole o link completo da loja</div></div>
+          <div class="field-row"><div class="field"><label>Bairro <span>*</span></label><input type="text" id="f-bairro" placeholder="Ex: Água Verde"><div class="error-msg" id="err-bairro">Campo obrigatório</div></div><div class="field"><label>Cidade</label><input type="text" id="f-cidade" value="Curitiba"></div></div>
+          <div class="field"><label>Categoria principal <span>*</span></label><select id="f-categoria"><option value="">Selecione...</option><option>Pizza</option><option>Hambúrguer</option><option>Japonesa / Sushi</option><option>Brasileira / Marmita</option><option>Churrasco</option><option>Frango</option><option>Açaí / Sobremesas</option><option>Lanches</option><option>Saudável / Fitness</option><option>Outra</option></select><div class="error-msg" id="err-categoria">Selecione a categoria</div></div>
+          <div class="field"><label>Há quanto tempo está no iFood? <span>*</span></label><div class="radio-group"><label class="radio-card"><input type="radio" name="tempo" value="menos3"> <span class="radio-label">Menos de 3 meses <span class="radio-sub">ainda estabilizando</span></span></label><label class="radio-card"><input type="radio" name="tempo" value="3a12"> <span class="radio-label">3 a 12 meses <span class="radio-sub">em fase de crescimento</span></span></label><label class="radio-card"><input type="radio" name="tempo" value="mais12"> <span class="radio-label">Mais de 1 ano <span class="radio-sub">operação estabelecida</span></span></label></div><div class="error-msg" id="err-tempo">Selecione uma opção</div></div>
+          <div class="form-nav"><button class="btn-next" onclick="nextPanel(1)">Próximo: cardápio →</button></div>
+        </div>
+
+        <div class="form-panel" id="panel-2">
+          <div class="field"><label>Quantos itens tem no cardápio? <span>*</span></label><div class="radio-group"><label class="radio-card"><input type="radio" name="itens" value="ate10"> <span class="radio-label">Até 10 itens</span></label><label class="radio-card"><input type="radio" name="itens" value="11a30"> <span class="radio-label">11 a 30 itens</span></label><label class="radio-card"><input type="radio" name="itens" value="mais30"> <span class="radio-label">Mais de 30 itens</span></label></div><div class="error-msg" id="err-itens">Selecione uma opção</div></div>
+          <div class="field"><label>Tem combos ativos?</label><div class="radio-group"><label class="radio-card"><input type="radio" name="combos" value="sim"> <span class="radio-label">Sim, tenho combos</span></label><label class="radio-card"><input type="radio" name="combos" value="nao"> <span class="radio-label">Não tenho combos ainda</span></label></div></div>
+          <div class="field"><label>Fotos em todos os produtos?</label><div class="radio-group"><label class="radio-card"><input type="radio" name="fotos" value="todos"> <span class="radio-label">Sim, todos têm foto</span></label><label class="radio-card"><input type="radio" name="fotos" value="alguns"> <span class="radio-label">Alguns têm, outros não</span></label><label class="radio-card"><input type="radio" name="fotos" value="nao"> <span class="radio-label">A maioria não tem foto</span></label></div></div>
+          <div class="field"><label>Liste os 5 produtos que mais vendem <span>*</span></label><textarea id="f-top5" placeholder="Ex:&#10;1. Pizza Margherita&#10;2. Combo Casal&#10;3. Frango Grelhado&#10;4. Refrigerante lata&#10;5. Suco natural"></textarea><div class="field-hint">Permite aplicar a fórmula de precificação nos seus produtos reais</div><div class="error-msg" id="err-top5">Informe seus produtos mais vendidos</div></div>
+          <div class="field"><label>Ticket médio estimado</label><div class="radio-group"><label class="radio-card"><input type="radio" name="ticket" value="ate30"> <span class="radio-label">Até R$ 30</span></label><label class="radio-card"><input type="radio" name="ticket" value="30a60"> <span class="radio-label">R$ 30 a R$ 60</span></label><label class="radio-card"><input type="radio" name="ticket" value="acima60"> <span class="radio-label">Acima de R$ 60</span></label><label class="radio-card"><input type="radio" name="ticket" value="nao-sei"> <span class="radio-label">Não sei ao certo</span></label></div></div>
+          <div class="form-nav"><button class="btn-prev" onclick="prevPanel(2)">← Voltar</button><button class="btn-next" onclick="nextPanel(2)">Próximo: situação atual →</button></div>
+        </div>
+
+        <div class="form-panel" id="panel-3">
+          <div class="field"><label>Nota atual no iFood? <span>*</span></label><div class="radio-group"><label class="radio-card"><input type="radio" name="nota" value="abaixo3"> <span class="radio-label">Abaixo de 3,0 <span class="radio-sub">situação crítica</span></span></label><label class="radio-card"><input type="radio" name="nota" value="3a39"> <span class="radio-label">3,0 a 3,9 <span class="radio-sub">precisa melhorar</span></span></label><label class="radio-card"><input type="radio" name="nota" value="4a46"> <span class="radio-label">4,0 a 4,6 <span class="radio-sub">razoável, pode crescer</span></span></label><label class="radio-card"><input type="radio" name="nota" value="47mais"> <span class="radio-label">4,7 ou mais <span class="radio-sub">boa nota</span></span></label><label class="radio-card"><input type="radio" name="nota" value="nao-sei"> <span class="radio-label">Não sei minha nota</span></label></div><div class="error-msg" id="err-nota">Selecione uma opção</div></div>
+          <div class="field"><label>Seu maior problema hoje? <span>*</span></label><div class="radio-group"><label class="radio-card"><input type="radio" name="problema" value="nota"> <span class="radio-label">Nota baixa e avaliações ruins</span></label><label class="radio-card"><input type="radio" name="problema" value="margem"> <span class="radio-label">Vendo muito mas não lucro</span></label><label class="radio-card"><input type="radio" name="problema" value="pedidos"> <span class="radio-label">Poucos pedidos / baixa visibilidade</span></label><label class="radio-card"><input type="radio" name="problema" value="tudo"> <span class="radio-label">Uma combinação de tudo isso</span></label></div><div class="error-msg" id="err-problema">Selecione uma opção</div></div>
+          <div class="field"><label>Costuma responder avaliações negativas?</label><div class="radio-group"><label class="radio-card"><input type="radio" name="resposta-aval" value="sempre"> <span class="radio-label">Sempre</span></label><label class="radio-card"><input type="radio" name="resposta-aval" value="as-vezes"> <span class="radio-label">Às vezes</span></label><label class="radio-card"><input type="radio" name="resposta-aval" value="nunca"> <span class="radio-label">Raramente ou nunca</span></label></div></div>
+          <div class="field"><label>Contexto adicional (opcional)</label><textarea id="f-contexto" placeholder="Mudanças recentes, problemas específicos, período de queda nos pedidos..."></textarea></div>
+          <div class="form-nav"><button class="btn-prev" onclick="prevPanel(3)">← Voltar</button><button class="btn-next" onclick="nextPanel(3)">Próximo: como entregar →</button></div>
+        </div>
+
+        <div class="form-panel" id="panel-4">
+          <div class="field"><label>Seu nome <span>*</span></label><input type="text" id="f-nome" placeholder="Como prefere ser chamado"><div class="error-msg" id="err-nome">Campo obrigatório</div></div>
+          <div class="field"><label>WhatsApp <span>*</span></label><input type="tel" id="f-whats" placeholder="(41) 99999-9999"><div class="field-hint">Onde vamos entregar o relatório</div><div class="error-msg" id="err-whats">Informe seu WhatsApp</div></div>
+          <div class="field"><label>E-mail (opcional)</label><input type="email" id="f-email" placeholder="seuemail@exemplo.com"></div>
+          <div class="field"><label>Como prefere receber o relatório? <span>*</span></label><div class="radio-group"><label class="radio-card"><input type="radio" name="canal" value="whats"> <span class="radio-label">Só no WhatsApp</span></label><label class="radio-card"><input type="radio" name="canal" value="whats-email"> <span class="radio-label">WhatsApp + e-mail</span></label></div><div class="error-msg" id="err-canal">Selecione uma opção</div></div>
+          <div class="check-field"><input type="checkbox" id="f-termos"><label for="f-termos">Autorizo a MOVE a acessar meu perfil público no iFood para fins de análise e concordo em receber o relatório no contato informado acima.</label></div>
+          <div class="error-msg" id="err-termos">Você precisa aceitar para continuar</div>
+          <div class="form-nav"><button class="btn-prev" onclick="prevPanel(4)">← Voltar</button><button class="btn-next" id="btn-enviar" onclick="submitForm()">Enviar formulário ✓</button></div>
+        </div>
+
+        <div class="form-panel" id="panel-success">
+          <div class="success-panel">
+            <div class="success-icon"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17" stroke="#2D7B4F" stroke-width="2"/><path d="M10 18l6 6 10-10" stroke="#2D7B4F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h2 class="success-h">Formulário recebido!</h2>
+            <p class="success-p">Já temos tudo que precisamos. Nossa equipe começa a análise assim que confirmar seu pagamento.</p>
+            <div class="success-box"><strong>O que acontece agora:</strong><br>1. Assim que confirmarmos seu pagamento, a análise começa em até 2h.<br>2. Você recebe o relatório em <strong>até 48h úteis</strong> no WhatsApp informado.<br><br>Qualquer dúvida: <strong>@move.delivery</strong> no Instagram.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pay-sidebar">
+        <div class="pay-card">
+          <div class="pay-card-top">
+            <div class="pay-tag">Raio-X do Delivery</div>
+            <div class="pay-title">Diagnóstico completo da sua loja no iFood</div>
+            <ul class="pay-list">
+              <li>Análise de nota e avaliações</li>
+              <li>Precificação com CMV aplicado</li>
+              <li>Diagnóstico de cardápio e visibilidade</li>
+              <li>Top 3 oportunidades de crescimento</li>
+              <li>Relatório em PDF — entregue em 48h</li>
+            </ul>
+          </div>
+          <div class="pay-divider"></div>
+          <div class="pay-card-bottom">
+            <div class="pay-preco-label">Investimento</div>
+            <div class="pay-preco">R$ 37</div>
+            <div class="pay-preco-nota">pagamento único · entrega em 48h</div>
+            <a href="SEU_LINK_PAGAMENTO_RAIOX" target="_blank" class="btn-pay" onclick="iniciarTimer()">Garantir meu Raio-X →</a>
+            <div class="pay-seguro"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="3" y="5.5" width="7" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M4.5 5.5V4a2 2 0 014 0v1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Pagamento seguro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-label">Dúvidas frequentes</div>
+    <h2 class="section-h2" style="margin-bottom:0">Respondidas antes<br>de você perguntar.</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Preciso dar acesso ao Portal do Parceiro? <span class="faq-arrow">+</span></button><div class="faq-a"><p>Não. A análise é feita com base no seu perfil público no iFood — aquele que qualquer cliente vê ao pesquisar. Para a precificação, pedimos que você liste seus produtos no formulário.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">O relatório é genérico ou personalizado? <span class="faq-arrow">+</span></button><div class="faq-a"><p>100% personalizado. Analisamos a sua loja específica, no seu bairro, com seus concorrentes diretos. Por isso pedimos o link e as informações no formulário.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">O que acontece se minha nota for muito baixa? <span class="faq-arrow">+</span></button><div class="faq-a"><p>Melhor ainda — nota baixa geralmente tem causa identificável. O Raio-X vai apontar exatamente o que está derrubando sua nota e o que fazer primeiro.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Atende só Curitiba? <span class="faq-arrow">+</span></button><div class="faq-a"><p>O Raio-X é feito remotamente e atende qualquer cidade. A análise de concorrência local pode ser menos detalhada fora de Curitiba, mas precificação, avaliações e cardápio funcionam para qualquer praça.</p></div></div>
+    </div>
+  </div>
+</section>
+</div><!-- /pg-raiox -->
+
+
+<!-- ════════════════════════════
+     PÁGINA 2 — PLANOS
+════════════════════════════ -->
+<div id="pg-planos" class="site-page">
+<div class="planos-hero">
+  <div id="timer-expired-banner" style="display:none;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);padding:12px 24px;text-align:center">
+    <span class="timer-expired">Os preços especiais expiraram. Confira nossos planos regulares abaixo.</span>
+  </div>
+
+  <div class="planos-hero-content">
+    <div class="container">
+      <div class="planos-hero-eyebrow">Consultoria MOVE</div>
+      <h1 class="planos-hero-h1">Vá além do diagnóstico.<br>Coloque em movimento.</h1>
+      <p class="planos-hero-sub">Para quem quer implementar as melhorias com acompanhamento especializado. Escolha o plano certo para o momento do seu delivery.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="planos-grid">
+
+    <div class="plano-card">
+      <div class="plano-card-top">
+        <div class="plano-badge">Entrada</div>
+        <div class="plano-nome">Intervenção Rápida</div>
+        <div class="plano-desc">Para quem quer resultados rápidos sem compromisso de longo prazo.</div>
+      </div>
+      <div class="plano-card-mid">
+        <div class="plano-preco-label">Investimento</div>
+        <div id="preco-de-1" class="plano-preco-de" style="display:none">R$ 297</div>
+        <div class="plano-preco" id="preco-1">R$ 297</div>
+        <div class="plano-oferta-tag" id="tag-oferta-1" style="display:none">Oferta especial</div>
+        <div class="plano-preco-nota">pagamento único · 2 semanas</div>
+      </div>
+      <div class="plano-card-body">
+        <ul class="plano-includes">
+          <li>Auditoria express da loja no iFood</li>
+          <li>Planilha de rentabilidade dos 5 principais produtos</li>
+          <li>Plano de ação com top 5 ajustes priorizados</li>
+          <li>Reestruturação de 1 categoria do cardápio</li>
+          <li>Criação de 1 combo estratégico</li>
+          <li>5 templates de resposta a avaliações negativas</li>
+        </ul>
+        <div class="plano-calc-bonus">Adicione a <strong>MOVE Calculadora CMV</strong> por apenas <strong>+ R$ 0,99/mês</strong> e tenha acesso por 6 meses.</div>
+        <a href="SEU_LINK_INTERVENCAO" target="_blank" class="btn-plano btn-plano-dark">Quero este plano →</a>
+      </div>
+    </div>
+
+    <div class="plano-card destaque">
+      <span class="plano-destaque-badge">Mais escolhido</span>
+      <div class="plano-card-top">
+        <div class="plano-badge">Recomendado</div>
+        <div class="plano-nome">Diagnóstico + Ação</div>
+        <div class="plano-desc">Para resolver os problemas de raiz com método e acompanhamento.</div>
+      </div>
+      <div class="plano-card-mid">
+        <div class="plano-preco-label">Investimento</div>
+        <div id="preco-de-2" class="plano-preco-de" style="display:none">R$ 600</div>
+        <div class="plano-preco" id="preco-2">R$ 600</div>
+        <div class="plano-oferta-tag" id="tag-oferta-2" style="display:none">Oferta especial</div>
+        <div class="plano-preco-nota">a partir de · 2 meses de trabalho</div>
+      </div>
+      <div class="plano-card-body">
+        <ul class="plano-includes">
+          <li>Auditoria completa da loja e concorrência local</li>
+          <li>Cálculo de rentabilidade de todo o cardápio</li>
+          <li>Engenharia de cardápio por quadrantes</li>
+          <li>Criação de 2 a 4 combos estratégicos</li>
+          <li>Ativação e gestão do iFood Anúncios</li>
+          <li>Protocolo completo de avaliações</li>
+          <li>Acompanhamento quinzenal por 2 meses</li>
+        </ul>
+        <div class="plano-calc-bonus">Adicione a <strong>MOVE Calculadora CMV</strong> por apenas <strong>+ R$ 0,99/mês</strong> e tenha acesso por 6 meses.</div>
+        <a href="SEU_LINK_DIAGNOSTICO" target="_blank" class="btn-plano btn-plano-ambar">Quero este plano →</a>
+      </div>
+    </div>
+
+    <div class="plano-card">
+      <div class="plano-card-top">
+        <div class="plano-badge">Continuidade</div>
+        <div class="plano-nome">Gestão Mensal</div>
+        <div class="plano-desc">Para crescimento contínuo com acompanhamento permanente.</div>
+      </div>
+      <div class="plano-card-mid">
+        <div class="plano-preco-label">Investimento</div>
+        <div id="preco-de-3" class="plano-preco-de" style="display:none">R$ 500</div>
+        <div class="plano-preco" id="preco-3">R$ 500</div>
+        <div class="plano-oferta-tag" id="tag-oferta-3" style="display:none">Oferta especial</div>
+        <div class="plano-preco-nota">a partir de · por mês</div>
+      </div>
+      <div class="plano-card-body">
+        <ul class="plano-includes">
+          <li>Relatório mensal de performance</li>
+          <li>Reunião quinzenal de revisão e ajustes</li>
+          <li>Ajustes contínuos de cardápio e promoções</li>
+          <li>Monitoramento de avaliações e concorrência</li>
+          <li>Estratégia de multicanalidade (99Food, Rappi)</li>
+          <li>Dashboard mensal com indicadores-chave</li>
+        </ul>
+        <div class="plano-calc-bonus">Adicione a <strong>MOVE Calculadora CMV</strong> por apenas <strong>+ R$ 0,99/mês</strong> e tenha acesso por 6 meses.</div>
+        <a href="SEU_LINK_GESTAO" target="_blank" class="btn-plano btn-plano-dark">Quero este plano →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- /pg-planos -->
+
+
+<!-- ════════════════════════════
+     PÁGINA 3 — CALCULADORA
+════════════════════════════ -->
+<div id="pg-calculadora" class="site-page">
+<div class="calc-hero">
+  <div class="container">
+    <div class="calc-hero-eyebrow">MOVE Calculadora CMV</div>
+    <h1 class="calc-hero-h1">Preço certo,<br>margem real,<br>resultado garantido.</h1>
+    <p class="calc-hero-sub">Descubra o preço mínimo que você precisa cobrar em cada produto para cobrir a comissão do iFood e ainda ter lucro real. Informe o custo, escolha seu plano e veja o número na hora.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="calc-page-grid">
+
+    <!-- CALCULADORA FUNCIONAL -->
+    <div>
+      <!-- ESTADO: LIVRE (até 2 usos) -->
+      <div id="calc-livre">
+        <div style="background:var(--branco);border:1px solid var(--borda);border-radius:16px;padding:36px;margin-bottom:24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px">
+            <div>
+              <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar);margin-bottom:4px">MOVE Calculadora CMV</div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:18px">Calcule seu preço de venda</div>
+            </div>
+            <div id="usos-badge" style="background:var(--creme);border:1px solid var(--borda);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--grafite)">2 cálculos gratuitos</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:28px">
+            <div class="field" style="margin:0">
+              <label>Nome do produto <span style="color:#aaa;font-weight:400">(opcional)</span></label>
+              <input type="text" id="c-nome" placeholder="Ex: Pizza Margherita, Camiseta básica...">
+            </div>
+            <div class="field" style="margin:0">
+              <label>Custo do produto (CMV) <span>*</span></label>
+              <input type="number" id="c-custo" placeholder="0,00" min="0" step="0.01" oninput="calcPreview()">
+              <div class="field-hint">Quanto você paga para produzir ou adquirir este item</div>
+            </div>
+            <div class="field" style="margin:0">
+              <label>Comissão iFood <span>*</span></label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <label class="radio-card" style="flex-direction:column;align-items:flex-start;gap:4px">
+                  <div style="display:flex;align-items:center;gap:8px"><input type="radio" name="comissao" value="12" onchange="calcPreview()"> <span class="radio-label">Plano Básico</span></div>
+                  <span class="radio-sub" style="padding-left:24px">12% de comissão</span>
+                </label>
+                <label class="radio-card" style="flex-direction:column;align-items:flex-start;gap:4px">
+                  <div style="display:flex;align-items:center;gap:8px"><input type="radio" name="comissao" value="26.2" onchange="calcPreview()"> <span class="radio-label">Plano Entrega</span></div>
+                  <span class="radio-sub" style="padding-left:24px">23% + 3,2% de comissão</span>
+                </label>
+              </div>
+              <div class="error-msg" id="err-comissao">Selecione o plano iFood</div>
+            </div>
+            <div class="field" style="margin:0">
+              <label>Margem de lucro desejada <span>*</span></label>
+              <div style="display:flex;align-items:center;gap:12px">
+                <input type="range" id="c-margem-slider" min="5" max="70" value="30" step="1" oninput="sincronizarMargem('slider')" style="flex:1;accent-color:var(--ambar)">
+                <div style="display:flex;align-items:center;gap:4px">
+                  <input type="number" id="c-margem" value="30" min="5" max="70" oninput="sincronizarMargem('input')" style="width:64px;padding:8px 10px;border:1px solid var(--borda);border-radius:6px;font-size:15px;font-weight:600;text-align:center;font-family:'Montserrat',sans-serif;outline:none">
+                  <span style="font-size:15px;font-weight:600;color:var(--grafite)">%</span>
+                </div>
+              </div>
+              <div class="field-hint">Margem calculada sobre o preço de venda final</div>
+            </div>
+          </div>
+
+          <!-- PREVIEW DO RESULTADO -->
+          <div id="calc-preview" style="background:var(--creme);border:1px solid var(--borda);border-radius:12px;padding:20px;margin-bottom:20px;display:none">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#aaa;margin-bottom:12px">Prévia do resultado</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+              <div style="text-align:center">
+                <div style="font-size:12px;color:#aaa;margin-bottom:4px">Custo</div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:18px;color:var(--grafite)" id="prev-custo">—</div>
+              </div>
+              <div style="text-align:center">
+                <div style="font-size:12px;color:#aaa;margin-bottom:4px">Margem desejada</div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:18px;color:var(--grafite)" id="prev-margem">—</div>
+              </div>
+              <div style="text-align:center;background:var(--ambar);border-radius:8px;padding:8px">
+                <div style="font-size:12px;color:rgba(26,26,26,.6);margin-bottom:4px">Preço de venda</div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;color:var(--preto)" id="prev-preco">—</div>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="calcular()" style="width:100%;padding:16px;background:var(--preto);color:var(--branco);font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;border:none;border-radius:10px;cursor:pointer;letter-spacing:.02em;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Calcular preço de venda →</button>
+        </div>
+
+        <!-- RESULTADO GERADO -->
+        <div id="calc-resultado-box" style="display:none;background:var(--preto);border-radius:16px;overflow:hidden;margin-bottom:24px">
+          <div style="padding:28px 28px 20px">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar2);margin-bottom:6px">Resultado para <span id="res-nome-produto">seu produto</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+              <div style="background:rgba(255,255,255,.05);border-radius:10px;padding:16px">
+                <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:6px">Custo do produto</div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;color:var(--branco)" id="res-custo">—</div>
+              </div>
+              <div style="background:rgba(255,255,255,.05);border-radius:10px;padding:16px">
+                <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:6px">Plano iFood</div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;color:var(--branco)" id="res-plano">—</div>
+              </div>
+              <div style="background:rgba(255,255,255,.05);border-radius:10px;padding:16px">
+                <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:6px">Margem desejada</div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;color:var(--branco)" id="res-margem">—</div>
+              </div>
+              <div style="background:var(--ambar);border-radius:10px;padding:16px">
+                <div style="font-size:12px;color:rgba(26,26,26,.55);margin-bottom:6px">Preço de venda</div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:28px;color:var(--preto)" id="res-preco">—</div>
+              </div>
+            </div>
+            <div style="margin-top:16px;padding:14px;background:rgba(255,255,255,.04);border-radius:8px;font-size:13px;color:rgba(255,255,255,.5);line-height:1.6">
+              Vendendo a <strong style="color:rgba(255,255,255,.8)" id="res-preco2">—</strong>, você recebe <strong style="color:rgba(255,255,255,.8)" id="res-liquido">—</strong> líquido após a comissão do iFood, com <strong style="color:var(--ambar)" id="res-lucro">—</strong> de lucro por unidade.
+            </div>
+          </div>
+          <div style="padding:16px 28px;background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center">
+            <span id="usos-restantes-txt" style="font-size:12px;color:rgba(255,255,255,.3)"></span>
+            <button onclick="novoCalculo()" style="background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 16px;border-radius:6px;cursor:pointer">Calcular outro produto</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTADO: BLOQUEADO (após 2 usos) -->
+      <div id="calc-bloqueado" style="display:none;background:var(--branco);border:1px solid var(--borda);border-radius:16px;overflow:hidden">
+        <div style="background:var(--preto);padding:28px;text-align:center">
+          <div style="width:52px;height:52px;border-radius:50%;background:rgba(239,159,39,.15);border:1px solid rgba(239,159,39,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#EF9F27" stroke-width="1.8"/><path d="M8 11V7a4 4 0 018 0v4" stroke="#EF9F27" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;color:var(--branco);margin-bottom:8px">Você usou seus 2 cálculos gratuitos</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.45);line-height:1.65;max-width:340px;margin:0 auto">Para continuar calculando preços de venda sem limite, assine a MOVE Calculadora CMV.</div>
+        </div>
+        <div style="padding:28px">
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:4px">
+            <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:34px;color:var(--preto)">R$ 14,99</span>
+            <span style="font-size:14px;color:#aaa">/mês</span>
+          </div>
+          <div style="font-size:12px;color:#aaa;margin-bottom:20px">cobrança mensal · cancele quando quiser</div>
+          <a href="SEU_LINK_CALCULADORA" target="_blank" style="display:block;width:100%;padding:16px;background:var(--ambar);color:var(--preto);font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;text-align:center;border-radius:10px;text-decoration:none;letter-spacing:.02em;margin-bottom:12px">Assinar e continuar calculando →</a>
+          <div style="height:1px;background:var(--borda);margin:16px 0"></div>
+          <div style="background:#FFF8EC;border:1px solid rgba(239,159,39,.3);border-radius:8px;padding:14px;font-size:13px;color:var(--grafite);line-height:1.55;margin-bottom:14px">
+            Fechou um <strong>plano de consultoria MOVE</strong>? Adicione a calculadora por <strong style="color:var(--ambar)">R$ 0,99/mês</strong> durante 6 meses.
+          </div>
+          <button onclick="mudarAba('planos', document.querySelectorAll('.site-tab')[1])" style="width:100%;padding:13px;background:none;border:1px solid var(--borda);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:var(--grafite);transition:all .2s" onmouseover="this.style.borderColor='var(--ambar)';this.style.color='var(--ambar)'" onmouseout="this.style.borderColor='var(--borda)';this.style.color='var(--grafite)'">Ver planos de consultoria →</button>
+        </div>
+      </div>
+
+      <!-- FEATURES ABAIXO DA CALCULADORA -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px">
+        <div style="background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:18px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:4px">Plano Básico iFood</div>
+          <div style="font-size:13px;color:var(--grafite)">12% de comissão. Você usa a própria frota de entrega.</div>
+        </div>
+        <div style="background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:18px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:4px">Plano Entrega iFood</div>
+          <div style="font-size:13px;color:var(--grafite)">23% + 3,2% = 26,2% de comissão. iFood faz a entrega.</div>
+        </div>
+        <div style="background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:18px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:4px">Margem sobre venda</div>
+          <div style="font-size:13px;color:var(--grafite)">Calculamos a margem sobre o preço final, não sobre o custo.</div>
+        </div>
+        <div style="background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:18px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:4px">Lucro líquido</div>
+          <div style="font-size:13px;color:var(--grafite)">Mostramos o valor real que fica no seu caixa após a comissão.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD DE ASSINATURA -->
+    <div class="calc-pricing-card">
+      <div class="calc-pricing-top">
+        <div class="calc-pricing-badge">MOVE Calculadora CMV</div>
+        <div class="calc-pricing-name">Acesso ilimitado</div>
+        <div class="calc-pricing-sub">Calcule preços de venda sem limite, para qualquer produto.</div>
+      </div>
+      <div class="calc-pricing-body">
+        <div class="calc-preco-wrap">
+          <span class="calc-preco-val">R$ 14,99</span>
+          <span class="calc-preco-per">/mês</span>
+        </div>
+        <div class="calc-preco-nota">cobrança mensal · cancele quando quiser</div>
+        <a href="SEU_LINK_CALCULADORA" target="_blank" class="btn-calc-assinar">Assinar agora →</a>
+        <div class="calc-divider"></div>
+        <div class="calc-bonus-box">
+          <div class="calc-bonus-titulo">Incluso nos planos de consultoria</div>
+          <div class="calc-bonus-desc">Ao fechar qualquer plano de consultoria MOVE, você adiciona a calculadora por apenas <strong>R$ 0,99/mês</strong> com acesso garantido por 6 meses.</div>
+          <div class="calc-bonus-preco">R$ 0,99<span>/mês por 6 meses</span></div>
+        </div>
+        <button class="btn-calc-plano" onclick="mudarAba('planos', document.querySelectorAll('.site-tab')[1])">Ver planos de consultoria →</button>
+        <div class="calc-seg">Plataforma segura · dados protegidos</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- /pg-calculadora -->
+
+<footer>
+  <div class="container">
+    <strong>MOVE — Consultoria de Delivery</strong> · Curitiba e Região Metropolitana · @move.delivery
+  </div>
+</footer>
+
+<script>
+/* ══ ABAS ══ */
+function mudarAba(aba, btn) {
+  document.querySelectorAll('.site-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.site-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('pg-' + aba).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (aba === 'calculadora') verificarEstadoCalc();
+}
+
+/* ══ TIMER 24H ══
+   Salva o momento do clique no pagamento em localStorage.
+   Quando o lead abre a aba de Planos, calcula o tempo restante.
+   Se já passou de 24h, mostra preços normais sem risco.         */
+const TIMER_KEY  = 'move_timer_start';
+const DURATION   = 24 * 60 * 60 * 1000; // 24h em ms
+
+/* Preços originais e com desconto */
+const PRECOS = {
+  normal:   ['R$ 297', 'R$ 600', 'R$ 500'],
+  oferta:   ['R$ 197', 'R$ 500', 'R$ 400'],
+  riscados: ['R$ 297', 'R$ 600', 'R$ 500'],
+};
+
+function iniciarTimer() {
+  if (!localStorage.getItem(TIMER_KEY)) {
+    localStorage.setItem(TIMER_KEY, Date.now().toString());
+  }
+  // Mostra aviso no formulário após 1.5s (tempo para abrir a plataforma)
+  setTimeout(() => {
+    const av = document.getElementById('form-pago-aviso');
+    if (av) av.style.display = 'block';
+  }, 1500);
+}
+
+function atualizarTimer() {
+  const start = parseInt(localStorage.getItem(TIMER_KEY) || '0');
+  if (!start) return;
+
+  const elapsed  = Date.now() - start;
+  const restante = DURATION - elapsed;
+  const banner   = document.getElementById('timer-banner');
+
+  if (restante <= 0) {
+    if (banner) banner.style.display = 'none';
+    aplicarPrecos(false);
+    return;
+  }
+
+  if (banner) banner.style.display = 'block';
+  aplicarPrecos(true);
+
+  const h = Math.floor(restante / 3600000);
+  const m = Math.floor((restante % 3600000) / 60000);
+  const s = Math.floor((restante % 60000) / 1000);
+  const pad = n => String(n).padStart(2, '0');
+  document.getElementById('t-h').textContent = pad(h);
+  document.getElementById('t-m').textContent = pad(m);
+  document.getElementById('t-s').textContent = pad(s);
+}
+
+function aplicarPrecos(emOferta) {
+  for (let i = 1; i <= 3; i++) {
+    const precoEl  = document.getElementById('preco-' + i);
+    const riscEl   = document.getElementById('preco-de-' + i);
+    const tagEl    = document.getElementById('tag-oferta-' + i);
+    if (!precoEl) continue;
+    if (emOferta) {
+      precoEl.textContent  = PRECOS.oferta[i - 1];
+      riscEl.textContent   = PRECOS.riscados[i - 1];
+      riscEl.style.display = 'block';
+      tagEl.style.display  = 'inline-block';
+    } else {
+      precoEl.textContent  = PRECOS.riscados[i - 1];
+      riscEl.style.display = 'none';
+      tagEl.style.display  = 'none';
+    }
+  }
+}
+
+// Roda o timer a cada segundo
+setInterval(atualizarTimer, 1000);
+atualizarTimer();
+
+/* ══ PAINÉIS DO FORMULÁRIO ══ */
+function showPanel(n) {
+  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + n).classList.add('active');
+  document.querySelectorAll('.form-step-btn').forEach((b, i) => {
+    b.classList.remove('active', 'done');
+    if (i + 1 < n) b.classList.add('done');
+    if (i + 1 === n) b.classList.add('active');
+  });
+  document.getElementById('progress-fill').style.width = (n / 4 * 100) + '%';
+  document.getElementById('formulario').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function nextPanel(from) { if (!validatePanel(from)) return; showPanel(from + 1); }
+function prevPanel(from) { showPanel(from - 1); }
+
+/* ══ VALIDAÇÃO ══ */
+function validatePanel(n) {
+  let valid = true;
+  function check(id, errId, cond) {
+    const el = document.getElementById(id), err = document.getElementById(errId);
+    if (!cond) { el && el.classList.add('field-error'); err && err.classList.add('show'); valid = false; }
+    else { el && el.classList.remove('field-error'); err && err.classList.remove('show'); }
+  }
+  function checkRadio(name, errId) {
+    const checked = document.querySelector('input[name="'+name+'"]:checked');
+    const err = document.getElementById(errId);
+    if (!checked) { err && err.classList.add('show'); valid = false; }
+    else { err && err.classList.remove('show'); }
+  }
+  if (n===1){ check('f-nome-loja','err-nome-loja',document.getElementById('f-nome-loja').value.trim().length>1); check('f-link-loja','err-link-loja',document.getElementById('f-link-loja').value.trim().length>5); check('f-bairro','err-bairro',document.getElementById('f-bairro').value.trim().length>1); check('f-categoria','err-categoria',document.getElementById('f-categoria').value!==''); checkRadio('tempo','err-tempo'); }
+  if (n===2){ checkRadio('itens','err-itens'); check('f-top5','err-top5',document.getElementById('f-top5').value.trim().length>5); }
+  if (n===3){ checkRadio('nota','err-nota'); checkRadio('problema','err-problema'); }
+  if (n===4){ check('f-nome','err-nome',document.getElementById('f-nome').value.trim().length>1); check('f-whats','err-whats',document.getElementById('f-whats').value.trim().length>7); checkRadio('canal','err-canal'); const t=document.getElementById('f-termos').checked, et=document.getElementById('err-termos'); if(!t){et.classList.add('show');valid=false;}else et.classList.remove('show'); }
+  return valid;
+}
+
+/* ══ SUBMIT → admconsultoriamove@gmail.com via Formspree ══ */
+async function submitForm() {
+  if (!validatePanel(4)) return;
+  const btn = document.getElementById('btn-enviar');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  const val = id => (document.getElementById(id)||{}).value||'';
+  const radio = name => { const el=document.querySelector('input[name="'+name+'"]:checked'); return el?el.value:''; };
+  const data = {
+    _subject: '🔆 Novo Raio-X — ' + val('f-nome-loja'),
+    nome_contato: val('f-nome'), whatsapp: val('f-whats'), email_contato: val('f-email'),
+    canal_entrega: radio('canal'), nome_loja: val('f-nome-loja'), link_ifood: val('f-link-loja'),
+    bairro: val('f-bairro'), cidade: val('f-cidade'), categoria: val('f-categoria'),
+    tempo_ifood: radio('tempo'), qtd_itens: radio('itens'), tem_combos: radio('combos'),
+    tem_fotos: radio('fotos'), top5_produtos: val('f-top5'), ticket_medio: radio('ticket'),
+    nota_atual: radio('nota'), maior_problema: radio('problema'),
+    responde_avaliacoes: radio('resposta-aval'), contexto_extra: val('f-contexto'),
+  };
+  try {
+    const res = await fetch('https://formspree.io/f/mjgqkrlr', {
+      method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      document.querySelectorAll('.form-panel').forEach(p=>p.classList.remove('active'));
+      document.querySelectorAll('.form-step-btn').forEach(b=>b.classList.add('done'));
+      document.getElementById('panel-success').classList.add('active');
+      document.getElementById('progress-fill').style.width='100%';
+      document.getElementById('formulario').scrollIntoView({behavior:'smooth',block:'start'});
+    } else { throw new Error(); }
+  } catch(e) {
+    btn.disabled=false; btn.textContent='Enviar formulário ✓';
+    alert('Erro ao enviar. Tente novamente ou entre em contato pelo @move.delivery no Instagram.');
+  }
+}
+
+/* ══ CALCULADORA CMV ══ */
+const CALC_KEY = 'move_calc_usos';
+const CALC_MAX = 2;
+
+function calcUsos() { return parseInt(localStorage.getItem(CALC_KEY) || '0'); }
+function addUso()   { localStorage.setItem(CALC_KEY, calcUsos() + 1); }
+
+function formatBRL(v) {
+  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function sincronizarMargem(origem) {
+  const slider = document.getElementById('c-margem-slider');
+  const input  = document.getElementById('c-margem');
+  if (origem === 'slider') input.value  = slider.value;
+  else                     slider.value = input.value;
+  calcPreview();
+}
+
+function calcPreview() {
+  const custo    = parseFloat(document.getElementById('c-custo').value);
+  const margemEl = document.getElementById('c-margem');
+  const margem   = parseFloat(margemEl.value);
+  const comEl    = document.querySelector('input[name="comissao"]:checked');
+  const preview  = document.getElementById('calc-preview');
+
+  if (!custo || !comEl || isNaN(margem)) { preview.style.display = 'none'; return; }
+
+  const comissao   = parseFloat(comEl.value) / 100;
+  const margemReal = margem / 100;
+  const precoVenda = custo / (1 - margemReal - comissao);
+
+  document.getElementById('prev-custo').textContent  = formatBRL(custo);
+  document.getElementById('prev-margem').textContent = margem + '%';
+  document.getElementById('prev-preco').textContent  = formatBRL(precoVenda);
+  preview.style.display = 'block';
+}
+
+function calcular() {
+  const custo  = parseFloat(document.getElementById('c-custo').value);
+  const margem = parseFloat(document.getElementById('c-margem').value);
+  const comEl  = document.querySelector('input[name="comissao"]:checked');
+  const errCom = document.getElementById('err-comissao');
+
+  if (!comEl) { errCom.classList.add('show'); return; }
+  else errCom.classList.remove('show');
+
+  if (!custo || custo <= 0) {
+    document.getElementById('c-custo').classList.add('field-error');
+    return;
+  }
+  document.getElementById('c-custo').classList.remove('field-error');
+
+  // Verifica limite
+  if (calcUsos() >= CALC_MAX) {
+    mostrarBloqueio(); return;
+  }
+
+  const comissaoPct = parseFloat(comEl.value);
+  const comissao    = comissaoPct / 100;
+  const margemReal  = margem / 100;
+  const precoVenda  = custo / (1 - margemReal - comissao);
+  const liquido     = precoVenda * (1 - comissao);
+  const lucro       = precoVenda * margemReal;
+  const nomeProd    = document.getElementById('c-nome').value.trim() || 'seu produto';
+  const nomePlano   = comissaoPct === 12 ? 'Básico (12%)' : 'Entrega (26,2%)';
+
+  addUso();
+  const usosRestantes = CALC_MAX - calcUsos();
+
+  document.getElementById('res-nome-produto').textContent = nomeProd;
+  document.getElementById('res-custo').textContent        = formatBRL(custo);
+  document.getElementById('res-plano').textContent        = nomePlano;
+  document.getElementById('res-margem').textContent       = margem + '%';
+  document.getElementById('res-preco').textContent        = formatBRL(precoVenda);
+  document.getElementById('res-preco2').textContent       = formatBRL(precoVenda);
+  document.getElementById('res-liquido').textContent      = formatBRL(liquido);
+  document.getElementById('res-lucro').textContent        = formatBRL(lucro);
+
+  const txt = usosRestantes > 0
+    ? usosRestantes + ' cálculo gratuito restante'
+    : 'Último cálculo gratuito utilizado';
+  document.getElementById('usos-restantes-txt').textContent = txt;
+  document.getElementById('usos-badge').textContent = usosRestantes > 0
+    ? usosRestantes + ' cálculo gratuito restante'
+    : 'Limite atingido';
+
+  document.getElementById('calc-preview').style.display    = 'none';
+  document.getElementById('calc-resultado-box').style.display = 'block';
+}
+
+function novoCalculo() {
+  if (calcUsos() >= CALC_MAX) { mostrarBloqueio(); return; }
+  document.getElementById('calc-resultado-box').style.display = 'none';
+  document.getElementById('calc-preview').style.display       = 'none';
+  document.getElementById('c-custo').value = '';
+  document.getElementById('c-nome').value  = '';
+}
+
+function mostrarBloqueio() {
+  document.getElementById('calc-livre').style.display     = 'none';
+  document.getElementById('calc-bloqueado').style.display = 'block';
+}
+
+// Ao abrir a aba, verificar se já está bloqueado
+function verificarEstadoCalc() {
+  if (calcUsos() >= CALC_MAX) mostrarBloqueio();
+  else {
+    document.getElementById('usos-badge').textContent =
+      (CALC_MAX - calcUsos()) + ' cálculos gratuitos';
+  }
+}
+
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
