@@ -674,9 +674,38 @@ footer strong{color:rgba(255,255,255,.5)}
               <input type="text" id="c-nome" placeholder="Ex: Pizza Margherita, Camiseta básica...">
             </div>
             <div class="field" style="margin:0">
+              <label>Como informar o custo (CMV)? <span>*</span></label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <label class="radio-card" style="flex-direction:column;align-items:flex-start;gap:4px">
+                  <div style="display:flex;align-items:center;gap:8px"><input type="radio" name="modo-custo" value="manual" checked onchange="mudarModoCusto()"> <span class="radio-label">Digitar o custo</span></div>
+                  <span class="radio-sub" style="padding-left:24px">já sei quanto custa</span>
+                </label>
+                <label class="radio-card" style="flex-direction:column;align-items:flex-start;gap:4px">
+                  <div style="display:flex;align-items:center;gap:8px"><input type="radio" name="modo-custo" value="ficha" onchange="mudarModoCusto()"> <span class="radio-label">Montar ficha técnica</span></div>
+                  <span class="radio-sub" style="padding-left:24px">calcular pelos ingredientes</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- FICHA TÉCNICA: calcula o CMV pelos ingredientes -->
+            <div id="ficha-tecnica" style="display:none;background:var(--creme);border:1px solid var(--borda);border-radius:12px;padding:18px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                <div style="font-size:13px;font-weight:600;color:var(--preto)">Ficha técnica</div>
+                <div style="font-size:12px;color:#aaa">CMV calculado pelos insumos</div>
+              </div>
+              <div class="field-hint" style="margin-bottom:14px">Para cada ingrediente: quanto você pagou pela embalagem, quanto ela rende e quanto entra em <strong>uma unidade</strong> do produto. Use a mesma unidade nos dois campos de quantidade.</div>
+              <div id="ficha-rows"></div>
+              <button type="button" onclick="addInsumo()" style="margin-top:4px;background:none;border:1px dashed var(--borda);border-radius:8px;padding:10px;width:100%;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--grafite);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--ambar)';this.style.color='var(--ambar)'" onmouseout="this.style.borderColor='var(--borda)';this.style.color='var(--grafite)'">+ adicionar ingrediente</button>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--borda)">
+                <span style="font-size:13px;font-weight:600;color:var(--grafite)">CMV do produto</span>
+                <span id="ficha-cmv" style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;color:var(--preto)">R$ 0,00</span>
+              </div>
+            </div>
+
+            <div class="field" style="margin:0">
               <label>Custo do produto (CMV) <span>*</span></label>
               <input type="number" id="c-custo" placeholder="0,00" min="0" step="0.01" oninput="calcPreview()">
-              <div class="field-hint">Quanto você paga para produzir ou adquirir este item</div>
+              <div class="field-hint" id="custo-hint">Quanto você paga para produzir ou adquirir este item</div>
             </div>
             <div class="field" style="margin:0">
               <label>Comissão iFood <span>*</span></label>
@@ -1020,6 +1049,106 @@ const CALC_MAX = 2;
 function calcUsos() { return parseInt(localStorage.getItem(CALC_KEY) || '0'); }
 function addUso()   { localStorage.setItem(CALC_KEY, calcUsos() + 1); }
 
+/* ── FICHA TÉCNICA (CMV pelos ingredientes) ──
+   Portado do motor do cookie-shop:
+   precoUnit = (preço pago ÷ qtd da embalagem) × fator de correção
+   custo do item = precoUnit × qtd usada por unidade
+   CMV = soma dos custos dos itens. */
+let ficha = [];
+let fichaSeq = 0;
+const UNIDADES = ['g', 'ml', 'un', 'kg', 'L'];
+
+function precoUnit(it) {
+  const preco = parseFloat(it.preco), qtd = parseFloat(it.qtd);
+  if (!preco || !qtd || qtd <= 0) return 0;
+  const fc = parseFloat(it.fc) > 0 ? parseFloat(it.fc) : 1;
+  return (preco / qtd) * fc;
+}
+function custoItem(it) {
+  const uso = parseFloat(it.uso);
+  if (!uso || uso <= 0) return 0;
+  return precoUnit(it) * uso;
+}
+
+function addInsumo() {
+  ficha.push({ id: ++fichaSeq, nome: '', preco: '', qtd: '', un: 'g', uso: '', fc: '' });
+  renderFicha();
+}
+function removeInsumo(id) {
+  ficha = ficha.filter(it => it.id !== id);
+  renderFicha();
+  recalcFicha();
+}
+function setFicha(id, campo, valor) {
+  const it = ficha.find(x => x.id === id);
+  if (!it) return;
+  it[campo] = valor;
+  // atualiza só o custo da linha sem re-renderizar (não perde o foco)
+  const cel = document.getElementById('fi-custo-' + id);
+  if (cel) cel.textContent = formatBRL(custoItem(it));
+  recalcFicha();
+}
+
+function renderFicha() {
+  const box = document.getElementById('ficha-rows');
+  if (!ficha.length) {
+    box.innerHTML = '<div style="font-size:13px;color:#aaa;text-align:center;padding:14px 0">Nenhum ingrediente ainda. Adicione o primeiro abaixo.</div>';
+    return;
+  }
+  box.innerHTML = ficha.map(it => {
+    const opts = UNIDADES.map(u => '<option value="' + u + '"' + (it.un === u ? ' selected' : '') + '>' + u + '</option>').join('');
+    return '<div style="background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:14px;margin-bottom:10px">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px">'
+      +   '<input type="text" value="' + esc(it.nome) + '" oninput="setFicha(' + it.id + ',\'nome\',this.value)" placeholder="Ingrediente (ex: farinha, queijo)" style="flex:1;padding:8px 10px;border:1px solid var(--borda);border-radius:6px;font-size:14px;font-weight:600;outline:none">'
+      +   '<button type="button" onclick="removeInsumo(' + it.id + ')" title="Remover" style="background:none;border:none;color:#c99;font-size:18px;cursor:pointer;line-height:1;padding:4px">×</button>'
+      + '</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">'
+      +   campo('Preço pago', 'R$', '<input type="number" value="' + esc(it.preco) + '" oninput="setFicha(' + it.id + ',\'preco\',this.value)" placeholder="0,00" min="0" step="0.01" style="' + inStyle + '">')
+      +   campo('Rende', '', '<div style="display:flex;gap:4px"><input type="number" value="' + esc(it.qtd) + '" oninput="setFicha(' + it.id + ',\'qtd\',this.value)" placeholder="0" min="0" step="any" style="' + inStyle + '"><select onchange="setFicha(' + it.id + ',\'un\',this.value)" style="padding:8px 4px;border:1px solid var(--borda);border-radius:6px;font-size:13px;outline:none">' + opts + '</select></div>')
+      +   campo('Usa por unidade', it.un, '<input type="number" value="' + esc(it.uso) + '" oninput="setFicha(' + it.id + ',\'uso\',this.value)" placeholder="0" min="0" step="any" style="' + inStyle + '">')
+      + '</div>'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">'
+      +   '<label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#aaa">Fator de correção (perda)<input type="number" value="' + esc(it.fc) + '" oninput="setFicha(' + it.id + ',\'fc\',this.value)" placeholder="1" min="1" step="0.01" style="width:62px;padding:5px 7px;border:1px solid var(--borda);border-radius:6px;font-size:12px;outline:none"></label>'
+      +   '<span style="font-size:13px;color:var(--grafite)">custo: <strong id="fi-custo-' + it.id + '" style="color:var(--preto)">' + formatBRL(custoItem(it)) + '</strong></span>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+const inStyle = 'width:100%;padding:8px 10px;border:1px solid var(--borda);border-radius:6px;font-size:14px;outline:none';
+function campo(label, sufixo, inner) {
+  return '<div><div style="font-size:11px;color:#aaa;margin-bottom:4px">' + label + (sufixo ? ' <span style="color:#ccc">(' + sufixo + ')</span>' : '') + '</div>' + inner + '</div>';
+}
+function esc(v) { return String(v == null ? '' : v).replace(/"/g, '&quot;'); }
+
+function recalcFicha() {
+  const cmv = ficha.reduce((s, it) => s + custoItem(it), 0);
+  document.getElementById('ficha-cmv').textContent = formatBRL(cmv);
+  const custoEl = document.getElementById('c-custo');
+  custoEl.value = cmv > 0 ? cmv.toFixed(2) : '';
+  calcPreview();
+}
+
+function mudarModoCusto() {
+  const modo = document.querySelector('input[name="modo-custo"]:checked').value;
+  const fichaBox = document.getElementById('ficha-tecnica');
+  const custoEl = document.getElementById('c-custo');
+  const hint = document.getElementById('custo-hint');
+  if (modo === 'ficha') {
+    fichaBox.style.display = 'block';
+    if (!ficha.length) addInsumo();
+    custoEl.readOnly = true;
+    custoEl.style.background = 'var(--creme)';
+    hint.textContent = 'Calculado automaticamente pela ficha técnica acima.';
+    recalcFicha();
+  } else {
+    fichaBox.style.display = 'none';
+    custoEl.readOnly = false;
+    custoEl.style.background = '';
+    hint.textContent = 'Quanto você paga para produzir ou adquirir este item';
+  }
+}
+
 function formatBRL(v) {
   return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
@@ -1110,6 +1239,8 @@ function novoCalculo() {
   document.getElementById('calc-preview').style.display       = 'none';
   document.getElementById('c-custo').value = '';
   document.getElementById('c-nome').value  = '';
+  const modo = document.querySelector('input[name="modo-custo"]:checked');
+  if (modo && modo.value === 'ficha') { ficha = []; addInsumo(); recalcFicha(); }
 }
 
 function mostrarBloqueio() {
