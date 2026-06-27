@@ -877,7 +877,7 @@ function mudarAba(aba, btn) {
   document.getElementById('pg-' + aba).classList.add('active');
   if (btn) btn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (aba === 'calculadora') verificarEstadoCalc();
+  if (aba === 'calculadora') iniciarCalculadora();
 }
 
 /* ══ TIMER 24H ══
@@ -970,6 +970,17 @@ function aplicarPrecos(emOferta) {
 setInterval(atualizarTimer, 1000);
 atualizarTimer();
 
+// Verifica token da calculadora ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('calc_token')) {
+    // Se veio com token, abre direto na aba da calculadora
+    mudarAba('calculadora', document.querySelectorAll('.site-tab')[2]);
+  } else {
+    iniciarCalculadora();
+  }
+});
+
 /* ══ PAINÉIS DO FORMULÁRIO ══ */
 function showPanel(n) {
   document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
@@ -1043,11 +1054,46 @@ async function submitForm() {
 }
 
 /* ══ CALCULADORA CMV ══ */
-const CALC_KEY = 'move_calc_usos';
-const CALC_MAX = 2;
+const CALC_KEY   = 'move_calc_usos';
+const CALC_TOKEN = 'move_calc_token';
+const CALC_MAX   = 2;
+
+let calcTokenValido = false; // preenchido ao iniciar
 
 function calcUsos() { return parseInt(localStorage.getItem(CALC_KEY) || '0'); }
 function addUso()   { localStorage.setItem(CALC_KEY, calcUsos() + 1); }
+
+async function iniciarCalculadora() {
+  // 1. Token na URL (?calc_token=xxx) → salva e valida
+  const params = new URLSearchParams(window.location.search);
+  const tokenUrl = params.get('calc_token');
+  if (tokenUrl) {
+    localStorage.setItem(CALC_TOKEN, tokenUrl);
+    // limpa a URL sem recarregar
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  const token = localStorage.getItem(CALC_TOKEN);
+  if (token) {
+    try {
+      const res = await fetch('/api/verify-token?token=' + encodeURIComponent(token));
+      const data = await res.json();
+      if (data.valid) {
+        calcTokenValido = true;
+        const badge = document.getElementById('usos-badge');
+        badge.textContent = 'Acesso ativo · ' + data.diasRestantes + ' dias restantes';
+        badge.style.background = '#e6f4ec';
+        badge.style.color = '#2D7B4F';
+        badge.style.borderColor = '#b2d9c2';
+        return;
+      } else {
+        localStorage.removeItem(CALC_TOKEN);
+      }
+    } catch (e) { /* ignora erro de rede, trata como sem token */ }
+  }
+
+  verificarEstadoCalc();
+}
 
 /* ── FICHA TÉCNICA (CMV pelos ingredientes) ──
    Portado do motor do cookie-shop:
@@ -1195,8 +1241,8 @@ function calcular() {
   }
   document.getElementById('c-custo').classList.remove('field-error');
 
-  // Verifica limite
-  if (calcUsos() >= CALC_MAX) {
+  // Verifica limite (ignora se token válido)
+  if (!calcTokenValido && calcUsos() >= CALC_MAX) {
     mostrarBloqueio(); return;
   }
 
@@ -1234,7 +1280,7 @@ function calcular() {
 }
 
 function novoCalculo() {
-  if (calcUsos() >= CALC_MAX) { mostrarBloqueio(); return; }
+  if (!calcTokenValido && calcUsos() >= CALC_MAX) { mostrarBloqueio(); return; }
   document.getElementById('calc-resultado-box').style.display = 'none';
   document.getElementById('calc-preview').style.display       = 'none';
   document.getElementById('c-custo').value = '';
@@ -1248,7 +1294,7 @@ function mostrarBloqueio() {
   document.getElementById('calc-bloqueado').style.display = 'block';
 }
 
-// Ao abrir a aba, verificar se já está bloqueado
+// Ao abrir a aba, verificar se já está bloqueado (sem token)
 function verificarEstadoCalc() {
   if (calcUsos() >= CALC_MAX) mostrarBloqueio();
   else {
