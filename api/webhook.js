@@ -84,20 +84,22 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Valida secret da Cakto
+  const secret = req.headers['x-cakto-secret'] || req.headers['x-webhook-secret'];
+  if (process.env.CAKTO_WEBHOOK_SECRET && secret !== process.env.CAKTO_WEBHOOK_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
   try {
     const payload = req.body;
 
-    const status = payload?.status
-      || payload?.payment?.status
-      || payload?.order?.status;
+    // Payload da Cakto: { event, data: { order, customer, product } }
+    const event = payload?.event || payload?.custom_id;
+    const data = payload?.data || payload;
 
-    if (!['paid', 'approved', 'completed'].includes(status)) {
-      return res.status(200).json({ ok: true, msg: 'Evento ignorado' });
-    }
-
-    const produtoId = payload?.product?.id || payload?.product_id;
-    const clienteNome = payload?.customer?.name || payload?.name || 'Cliente';
-    const clienteEmail = payload?.customer?.email || payload?.email;
+    const produtoId = data?.product?.id || data?.product_id || payload?.product?.id;
+    const clienteNome = data?.customer?.name || data?.name || payload?.customer?.name || 'Cliente';
+    const clienteEmail = data?.customer?.email || data?.email || payload?.customer?.email;
 
     if (!produtoId || !clienteEmail) {
       return res.status(400).json({ error: 'Dados incompletos no payload' });
